@@ -1,0 +1,22 @@
+# GitLab Pages deploy for the PPO  (#1)
+# Published at: https://<namespace>.gitlab.io/<repo>/
+#   (user project)  https://<username>.gitlab.io/<repo>/
+#   (group project) https://<group>.gitlab.io/<repo>/
+
+pages:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - mkdir -p public
+    - cp main-page.html public/index.html
+    - cp logo.png       public/logo.png
+    - cp blur.png       public/blur.png
+    - cp bgcopy.png     public/bgcopy.png
+    - cp qrcode.png     public/qrcode.png
+    # Optional: expose the raw page under a stable name too
+    - cp main-page.html public/main-page.html
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
